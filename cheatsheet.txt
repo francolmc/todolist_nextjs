@@ -1,0 +1,98 @@
+- Crear proyecto
+pnpm create next-app nextjs
+
+- Instalar prettier
+pnpm add -D prettier
+
+- Crear archivo .prettierrc en la raiz con el siguiente contenido
+{
+    "semi": true,
+    "singleQuote":true,
+    "prettier.bracketSpacing": true,
+    "prettier.arrowParens": "avoid",
+    "tailingComma": "all",
+    "tabWidth": 4
+}
+
+- Configurar archivo .eslintrc.json con el siguiente contenido
+{
+    "extends": [
+        "next",
+        "next/core-web-vitals",
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:prettier/recommended"
+    ],
+    "plugins": ["@typescript-eslint/eslint-plugin"],
+    "globals": {
+        "React": "readonly"
+    },
+    "rules": {
+        "no-unused-vars": "warn",
+        "@typescript-eslint/interface-name-prefix": "off",
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+        "@typescript-eslint/no-explicit-any": "off"
+    }
+}
+
+- Se agrega el siguiente path en el archivo tsconfig.json
+"paths": {
+      "@core/*": ["./src/core/*"]
+    }
+
+- Se codifican las entidades en /src/core/entities
+export default class TodoEntity {
+    constructor(
+        id: number |undefined,
+        taskName: string,
+        completed: boolean,
+        userId: number,
+        createdAt: Date|undefined,
+        updatedAt: Date |undefined
+    ) {
+        this.id = id;
+        this.taskName = taskName;
+        this.completed = completed;
+        this.userId = userId;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    public id: number|undefined;
+    public taskName: string;
+    public completed: boolean;
+    public userId: number;
+    public readonly createdAt: Date | undefined;
+    public readonly updatedAt: Date | undefined;
+}
+
+export default class UserEntity {
+    constructor(
+        id: number | undefined,
+        firstName: string,
+        lastName: string,
+        email: string,
+        password: string | undefined,
+        createdAt: Date | undefined,
+        updatedAt: Date | undefined
+    ) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    public id: number | undefined;
+    public firstName: string;
+    public lastName: string;
+    public email: string;
+    public password: string | undefined;
+    public createdAt: Date|undefined;
+    public updatedAt: Date|undefined;
+}
+
+

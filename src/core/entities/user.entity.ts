@@ -4,7 +4,7 @@ export default class UserEntity {
         firstName: string,
         lastName: string,
         email: string,
-        password: string | undefined,
+        password: string | null,
         createdAt: Date | undefined,
         updatedAt: Date | undefined
     ) {
@@ -21,7 +21,7 @@ export default class UserEntity {
     public firstName: string;
     public lastName: string;
     public email: string;
-    public password: string | undefined;
+    public password?: string | null;
     public createdAt: Date | undefined;
     public updatedAt: Date | undefined;
 }

@@ -1,11 +1,11 @@
 export default class TodoEntity {
     constructor(
-        id: number |undefined,
+        id: number | undefined,
         taskName: string,
         completed: boolean,
         userId: number,
-        createdAt: Date|undefined,
-        updatedAt: Date |undefined
+        createdAt: Date | undefined,
+        updatedAt: Date | undefined
     ) {
         this.id = id;
         this.taskName = taskName;
@@ -15,7 +15,7 @@ export default class TodoEntity {
         this.updatedAt = updatedAt;
     }
 
-    public id: number|undefined;
+    public id: number | undefined;
     public taskName: string;
     public completed: boolean;
     public userId: number;

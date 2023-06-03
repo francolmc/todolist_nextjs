@@ -18,7 +18,10 @@ export default class TodoService {
     }
 
     public async updateTodo(id: number, todo: TodoEntity): Promise<TodoEntity> {
-        if (!todo.taskName) throw new RequiredFieldException('El campo "task_name" es requerido');
+        if (!todo.taskName)
+            throw new RequiredFieldException(
+                'El campo "task_name" es requerido'
+            );
 
         const findedTodo = await this._todoRepository.findById(id);
 

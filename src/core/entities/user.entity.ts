@@ -22,6 +22,6 @@ export default class UserEntity {
     public lastName: string;
     public email: string;
     public password: string | undefined;
-    public createdAt: Date|undefined;
-    public updatedAt: Date|undefined;
+    public createdAt: Date | undefined;
+    public updatedAt: Date | undefined;
 }

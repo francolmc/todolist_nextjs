@@ -72,4 +72,14 @@ export default class TodoService {
 
         return findedTodo;
     }
+
+    public async findTodoAll(userId: string): Promise<TodoEntity[]> {
+        const findedTodo = await this._todoRepository.findAll(userId);
+
+        if (!findedTodo) {
+            throw new RecordNotFoundException('No existen registros para el usaurio');
+        }
+
+        return findedTodo;
+    }
 }

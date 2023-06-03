@@ -6,4 +6,5 @@ export default interface ITodoRepository {
     delete(id: string): Promise<TodoEntity>;
     findByName(name: string, userId: string): Promise<TodoEntity[]>;
     findById(id: string): Promise<TodoEntity | null>;
+    findAll(userId: string): Promise<TodoEntity[]>;
 }

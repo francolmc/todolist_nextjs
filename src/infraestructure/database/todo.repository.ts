@@ -6,6 +6,10 @@ import { prisma } from './prisma';
 export default class TodoRepository implements ITodoRepository {
     constructor() {}
 
+    public async findAll(userId: string): Promise<TodoEntity[]> {
+        return prisma.todo.findMany({ where: {userId} });
+    }
+
     public async create(todo: TodoEntity): Promise<TodoEntity | undefined> {
         const todoInput: Prisma.TodoCreateInput = {
             taskName: todo.taskName,

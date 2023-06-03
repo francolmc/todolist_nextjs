@@ -8,7 +8,7 @@ import ITodoRepository from '@core/repositories/itodo.repository';
 export default class TodoService {
     constructor(private readonly _todoRepository: ITodoRepository) {}
 
-    public async createTodo(todo: TodoEntity): Promise<TodoEntity> {
+    public async createTodo(todo: TodoEntity): Promise<TodoEntity | undefined> {
         if (!todo.taskName)
             throw new RequiredFieldException(
                 'El campo "task_name" es requerido'
@@ -17,7 +17,7 @@ export default class TodoService {
         return this._todoRepository.create(todo);
     }
 
-    public async updateTodo(id: number, todo: TodoEntity): Promise<TodoEntity> {
+    public async updateTodo(id: string, todo: TodoEntity): Promise<TodoEntity> {
         if (!todo.taskName)
             throw new RequiredFieldException(
                 'El campo "task_name" es requerido'
@@ -34,7 +34,7 @@ export default class TodoService {
         return this._todoRepository.update(id, todo);
     }
 
-    public async deleteTodo(id: number): Promise<TodoEntity> {
+    public async deleteTodo(id: string): Promise<TodoEntity> {
         const findedTodo = await this._todoRepository.findById(id);
 
         if (!findedTodo) {
@@ -46,7 +46,7 @@ export default class TodoService {
         return this._todoRepository.delete(id);
     }
 
-    public async findTodoById(id: number): Promise<TodoEntity> {
+    public async findTodoById(id: string): Promise<TodoEntity> {
         const findedTodo = await this._todoRepository.findById(id);
 
         if (!findedTodo) {
@@ -58,8 +58,11 @@ export default class TodoService {
         return findedTodo;
     }
 
-    public async findTodoByName(name: string): Promise<TodoEntity[]> {
-        const findedTodo = await this._todoRepository.findByName(name);
+    public async findTodoByName(
+        name: string,
+        userId: string
+    ): Promise<TodoEntity[]> {
+        const findedTodo = await this._todoRepository.findByName(name, userId);
 
         if (!findedTodo) {
             throw new RecordNotFoundException(

@@ -1,6 +1,6 @@
 export default class UserEntity {
     constructor(
-        id: number | undefined,
+        id: string | undefined,
         firstName: string,
         lastName: string,
         email: string,
@@ -17,7 +17,7 @@ export default class UserEntity {
         this.updatedAt = updatedAt;
     }
 
-    public id: number | undefined;
+    public id: string | undefined;
     public firstName: string;
     public lastName: string;
     public email: string;

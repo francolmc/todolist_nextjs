@@ -2,9 +2,13 @@ import UserEntity from '@core/entities/user.entity';
 import RecordNotFoundException from '@core/exceptions/record-not-found.exception';
 import RequiredFieldException from '@core/exceptions/required-field.exception';
 import IUserRepository from '@core/repositories/iuser.repository';
+import Cryptr from 'cryptr';
 
 export default class UserService {
-    constructor(private readonly _userRepository: IUserRepository) {}
+    constructor(
+        private readonly _userRepository: IUserRepository,
+        private readonly _SECRET_KEY: string = 'qvjlAmHIFd'
+    ) {}
 
     public async createUser(user: UserEntity): Promise<UserEntity> {
         if (!user.firstName)
@@ -21,7 +25,8 @@ export default class UserService {
             throw new RequiredFieldException(
                 'El campo "password" es requerido'
             );
-
+        const crypt = new Cryptr(this._SECRET_KEY);
+        user.password = crypt.encrypt(user.password);
         return this._userRepository.create(user);
     }
 
@@ -44,6 +49,10 @@ export default class UserService {
                 `El usuario con id "${id}" no existe`
             );
 
+        if (user.password) {
+            const crypt = new Cryptr(this._SECRET_KEY);
+            user.password = crypt.encrypt(user.password);
+        }
         return this._userRepository.update(id, user);
     }
 

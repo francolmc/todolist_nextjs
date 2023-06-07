@@ -37,13 +37,13 @@ export default function RootLayout({
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" className="hover:text-gray-400">
-                                        Link 2
+                                    <a href="/register" className="hover:text-gray-400">
+                                        Registro
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" className="hover:text-gray-400">
-                                        Link 3
+                                    <a href="/login" className="hover:text-gray-400">
+                                        Login
                                     </a>
                                 </li>
                             </ul>

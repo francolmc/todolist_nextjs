@@ -25,8 +25,7 @@ export default class UserService {
             throw new RequiredFieldException(
                 'El campo "password" es requerido'
             );
-        const crypt = new Cryptr(this._SECRET_KEY);
-        user.password = crypt.encrypt(user.password);
+        user.password = this.encryptPassword(user.password);
         return this._userRepository.create(user);
     }
 
@@ -50,8 +49,7 @@ export default class UserService {
             );
 
         if (user.password) {
-            const crypt = new Cryptr(this._SECRET_KEY);
-            user.password = crypt.encrypt(user.password);
+            user.password = this.encryptPassword(user.password);
         }
         return this._userRepository.update(id, user);
     }
@@ -87,5 +85,10 @@ export default class UserService {
             );
 
         return userFinded;
+    }
+
+    public encryptPassword(password: string): string {
+        const crypt = new Cryptr(this._SECRET_KEY);
+        return crypt.encrypt(password);
     }
 }

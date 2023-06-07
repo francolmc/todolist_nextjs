@@ -25,7 +25,7 @@ export default class UserService {
         return this._userRepository.create(user);
     }
 
-    public async updateTodo(id: number, user: UserEntity): Promise<UserEntity> {
+    public async updateTodo(id: string, user: UserEntity): Promise<UserEntity> {
         if (!user.firstName)
             throw new RequiredFieldException(
                 'El campo "first_name" es requerido'
@@ -47,7 +47,7 @@ export default class UserService {
         return this._userRepository.update(id, user);
     }
 
-    public async deleteTodo(id: number): Promise<UserEntity> {
+    public async deleteTodo(id: string): Promise<UserEntity> {
         const userFinded = await this._userRepository.findById(id);
 
         if (!userFinded)
@@ -58,7 +58,7 @@ export default class UserService {
         return this._userRepository.delete(id);
     }
 
-    public async findUserById(id: number): Promise<UserEntity> {
+    public async findUserById(id: string): Promise<UserEntity> {
         const userFinded = await this._userRepository.findById(id);
 
         if (!userFinded)

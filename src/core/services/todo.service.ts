@@ -17,7 +17,11 @@ export default class TodoService {
         return this._todoRepository.create(todo);
     }
 
-    public async updateTodo(id: string, todo: TodoEntity): Promise<TodoEntity> {
+    public async updateTodo(
+        id: string,
+        todo: TodoEntity,
+        userId: string
+    ): Promise<TodoEntity> {
         if (!todo.taskName)
             throw new RequiredFieldException(
                 'El campo "task_name" es requerido'
@@ -25,16 +29,22 @@ export default class TodoService {
 
         const findedTodo = await this._todoRepository.findById(id);
 
-        if (findedTodo) {
+        if (!findedTodo) {
             throw new ExistingRecordException(
-                `La tarea con id "${id}" ya existe.`
+                `La tarea con id "${id}" no existe.`
+            );
+        }
+
+        if (findedTodo.userId !== userId) {
+            throw new ExistingRecordException(
+                `La tarea con id "${id}" no existe.`
             );
         }
 
         return this._todoRepository.update(id, todo);
     }
 
-    public async deleteTodo(id: string): Promise<TodoEntity> {
+    public async deleteTodo(id: string, userId: string): Promise<TodoEntity> {
         const findedTodo = await this._todoRepository.findById(id);
 
         if (!findedTodo) {
@@ -43,14 +53,26 @@ export default class TodoService {
             );
         }
 
+        if (findedTodo.userId !== userId) {
+            throw new ExistingRecordException(
+                `El registro con id "${id}" no existe.`
+            );
+        }
+
         return this._todoRepository.delete(id);
     }
 
-    public async findTodoById(id: string): Promise<TodoEntity> {
+    public async findTodoById(id: string, userId: string): Promise<TodoEntity> {
         const findedTodo = await this._todoRepository.findById(id);
 
         if (!findedTodo) {
             throw new RecordNotFoundException(
+                `El registro con id "${id}" no existe.`
+            );
+        }
+
+        if (findedTodo.userId !== userId) {
+            throw new ExistingRecordException(
                 `El registro con id "${id}" no existe.`
             );
         }
@@ -77,7 +99,9 @@ export default class TodoService {
         const findedTodo = await this._todoRepository.findAll(userId);
 
         if (!findedTodo) {
-            throw new RecordNotFoundException('No existen registros para el usaurio');
+            throw new RecordNotFoundException(
+                'No existen registros para el usaurio'
+            );
         }
 
         return findedTodo;
